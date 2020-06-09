@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/routes/**/*.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    { "src": "/api/hello(.*)", "dest": "api/routes/hello" },
+    { "src": "/api/(.*)", "dest": "api/routes/$1" },
+    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
+    {
+      "src": "/sw.js",
+      "dest": "/_nuxt/static/sw.js",
+      "headers": {
+        "cache-control": "public, max-age=43200, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    { "src": "/(.+)", "dest": "api/routes/index.js" },
+    { "src": "/(.*)", "dest": "$1" }
+  ]
+}
