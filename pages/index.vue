@@ -60,7 +60,7 @@ export default {
 
     async enter() {
       this.loading = true;
-      const API_URL = process.env.NODE_ENV === 'development' ? `http://localhost:${process.env.PORT}/api/register` : '/api/register';
+      const API_URL = process.env.NODE_ENV === 'development' ? `http://localhost:${process.env.API_DEV_PORT}/api/register` : '/api/register';
       await axios
         .post(API_URL, { name: this.name })
         .then((res) => {

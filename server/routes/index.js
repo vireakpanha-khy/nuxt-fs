@@ -18,7 +18,7 @@ app.post('/api/register', async (req, res) => {
   } else {
     user = new User({ name, registrationDate: new Date() });
     await user.save();
-    const URL = process.env.NODE_ENV === 'development' ? process.env.SERVER_URL : 'https://nuxt-fs.now.sh/';
+    const URL = process.env.NODE_ENV === 'development' ? `http://localhost:${process.env.API_DEV_PORT}` : 'https://nuxt-fs.now.sh';
     res.status(200).send({ url: `${URL}/${name}` });
   }
 });
