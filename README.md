@@ -2,21 +2,22 @@
 
 > A sample full-stack web application with NuxtJS, Express and MongoDB deploying on now.sh
 
-## Build Setup
+## BUILD SETUP
 
 ```bash
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
+# add variables to ".env" files
++ MONGO_URI
++ NODE_ENV
+    - 'development' when running locally
+    - 'production' before deploying to now.sh
++ API_DEV_PORT (any port number except 3000)
+
+# run locally
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+# deploy to now.sh
+$ now --prod
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

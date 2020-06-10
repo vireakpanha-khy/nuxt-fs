@@ -39,7 +39,7 @@ export default {
     return {
       name: '',
       status: '',
-      url: 'https://nuxt-fs.now.sh/mixkielongernssssssssssssasddddddddddddddddddame',
+      url: '',
       errorMessage: '',
       invalidName: false,
       registered: false,
@@ -60,9 +60,9 @@ export default {
 
     async enter() {
       this.loading = true;
-      const API_URL = process.env.NODE_ENV === 'development' ? process.env.SERVER_URL : '';
+      const API_URL = process.env.NODE_ENV === 'development' ? `http://localhost:${process.env.PORT}/api/register` : '/api/register';
       await axios
-        .post(`${API_URL}/api/register`, { name: this.name })
+        .post(API_URL, { name: this.name })
         .then((res) => {
           const response = res.data;
           if (response.message) {
@@ -73,7 +73,7 @@ export default {
           }
         })
         .catch((err) => {
-          this.errorMessage = `Unable to register <${name}> at the moment.`;
+          this.errorMessage = `Unable to register <${this.name}> at the moment.`;
           console.log(err);
         });
       this.loading = false;
