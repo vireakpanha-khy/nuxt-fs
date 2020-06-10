@@ -1,3 +1,4 @@
+require('dotenv').config();
 const app = require('../app');
 const User = require('../model/User');
 
@@ -13,7 +14,8 @@ app.post('/api/register', async (req, res) => {
   } else {
     user = new User({ name, registrationDate: new Date() });
     await user.save();
-    res.status(200).send({ url: `https://nuxt-fs.now.sh/${name}` });
+    const URL = process.env.NODE_ENV === 'development' ? process.env.SERVER_URL : 'https://nuxt-fs.now.sh/';
+    res.status(200).send({ url: `${URL}/${name}` });
   }
 });
 
@@ -34,4 +36,12 @@ app.get('/:name', async (req, res) => {
   }
 });
 
-module.exports = app;
+const NODE_ENV = process.env.NODE_ENV;
+if (NODE_ENV === 'development') {
+  const PORT = process.env.API_DEV_PORT;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
+  });
+} else {
+  module.exports = app;
+}

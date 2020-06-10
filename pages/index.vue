@@ -10,7 +10,8 @@
     />
     <p class="text-center text-red-500">{{ errorMessage }}</p>
     <p v-if="registered" class="text-center text-teal-500 mt-4 text-sm sm:text-base">
-      <span class="font-bold">SUCCESS!</span> <a :href="url" class="bg-teal-200 text-gray-700 px-2 py-1 rounded-md">View Your Information</a>
+      <span class="font-bold">SUCCESS!</span>
+      <a :href="url" class="bg-teal-200 text-gray-700 px-2 py-1 rounded-md">View Your Information</a>
     </p>
 
     <button
@@ -59,8 +60,9 @@ export default {
 
     async enter() {
       this.loading = true;
+      const API_URL = process.env.NODE_ENV === 'development' ? process.env.SERVER_URL : '';
       await axios
-        .post('/api/register', { name: this.name })
+        .post(`${API_URL}/api/register`, { name: this.name })
         .then((res) => {
           const response = res.data;
           if (response.message) {
