@@ -5,6 +5,10 @@ const User = require('../model/User');
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+function addZero(n) {
+  return n > 9 ? n : '0' + n;
+}
+
 app.post('/api/register', async (req, res) => {
   const name = req.body.name;
   let user = await User.findOne({ name });
@@ -25,12 +29,14 @@ app.get('/:name', async (req, res) => {
 
   if (user) {
     const registrationDate = user.registrationDate;
-    const day = days[registrationDate.getDay()];
-    const date = registrationDate.getDate();
-    const month = months[registrationDate.getMonth()];
-    const year = registrationDate.getFullYear();
-
-    res.status(200).send(`[${name}] registered on ${day} ${date}/${month}/${year} (UTC)`);
+    const currentDate = new Date(registrationDate.toString());
+    const day = days[currentDate.getDay()];
+    const date = currentDate.getDate();
+    const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+    const hour = currentDate.getHours();
+    const minute = currentDate.getMinutes();
+    res.status(200).send(`[${name}] registered on ${day} ${addZero(date)}/${month}/${year} at ${addZero(hour)}:${addZero(minute)}`);
   } else {
     res.status(200).send('No User Found!');
   }
