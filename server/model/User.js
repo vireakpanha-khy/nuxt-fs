@@ -5,4 +5,4 @@ const userSchema = new mongoose.Schema({
   registrationDate: Object
 });
 
-module.exports = mongoose.model('Url', userSchema);
+module.exports = mongoose.model('User', userSchema);
